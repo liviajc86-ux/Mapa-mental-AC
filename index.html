@@ -26,19 +26,20 @@
   body {
     background: var(--bege);
     font-family: 'Source Sans 3', sans-serif;
-    font-size: 11pt;
+    font-size: 8pt;
     color: var(--preto);
     line-height: 1.45;
   }
 
   /* ── PÁGINA ── */
   .page {
-    width: 297mm;
-    min-height: 210mm;
+    width: 210mm;
+    height: 297mm;
     margin: 0 auto;
-    padding: 14mm 14mm 14mm 14mm;
+    padding: 6mm;
     background: var(--bege);
-  }
+    overflow: hidden;
+}
 
   /* ── CABEÇALHO ── */
   .header {
@@ -78,11 +79,14 @@
   }
 
   /* ── GRID PRINCIPAL ── */
-  .grid {
+.grid {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-  }
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "act ba"
+        "fap fap";
+    gap: 6px;
+}
 
   /* ── CARD ── */
   .card {
@@ -100,12 +104,8 @@
     padding: 9px 12px 8px;
   }
   .card-header .sigla {
-    font-family: 'Playfair Display', serif;
-    font-size: 18pt;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: -1px;
-  }
+    font-size: 13pt;
+}
   .card-header .nome-completo {
     font-size: 7.5pt;
     font-weight: 600;
@@ -410,7 +410,7 @@
     }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
-  @page { size: A4 landscape; margin: 8mm; }
+  @page @page {size: A4 portrait; margin: 4mm;}
 </style>
 </head>
 <body>
@@ -429,7 +429,7 @@
   <div class="grid">
 
     <!-- ════════════════ COLUNA 1 — ACT ════════════════ -->
-    <div class="card">
+    <div class="card act">
       <div class="card-header">
         <div class="sigla">ACT</div>
         <div class="nome-completo">Terapia de Aceitação e Compromisso</div>
@@ -512,7 +512,7 @@
     </div><!-- /ACT -->
 
     <!-- ════════════════ COLUNA 2 — BA ════════════════ -->
-    <div class="card">
+    <div class="card ba">
       <div class="card-header">
         <div class="sigla">BA</div>
         <div class="nome-completo">Ativação Comportamental</div>
@@ -599,7 +599,7 @@
     </div><!-- /BA -->
 
     <!-- ════════════════ COLUNA 3 — FAP ════════════════ -->
-    <div class="card">
+    <div class="card fap">
       <div class="card-header">
         <div class="sigla">FAP</div>
         <div class="nome-completo">Psicoterapia Analítico-Funcional</div>
