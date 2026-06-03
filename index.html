@@ -39,6 +39,7 @@
     padding: 6mm;
     background: var(--bege);
     overflow: visible;
+}
 
   /* ── CABEÇALHO ── */
   .header {
@@ -85,6 +86,24 @@
         "act ba"
         "fap fap";
     gap: 6px;
+}
+
+.act {
+    grid-area: act;
+}
+
+.ba {
+    grid-area: ba;
+}
+
+.fap {
+    grid-area: fap;
+}
+
+/* ── CARD ── */
+.card {
+    background: var(--branco);
+    ...
 }
 
   /* ── CARD ── */
@@ -409,7 +428,10 @@
     }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
-  @page @page {size: A4 portrait; margin: 4mm;}
+  @page {
+    size: A4 portrait;
+    margin: 4mm;
+}
 </style>
 </head>
 <body>
