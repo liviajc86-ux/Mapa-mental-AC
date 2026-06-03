@@ -52,7 +52,7 @@
   }
   .header-title h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 22pt;
+    font-size: 18pt;
     font-weight: 900;
     color: var(--preto);
     letter-spacing: -0.5px;
@@ -60,7 +60,7 @@
   }
   .header-title h1 span { color: var(--vermelho); }
   .header-title p {
-    font-size: 9pt;
+    font-size: 7pt;
     color: var(--cinza);
     margin-top: 3px;
     font-weight: 300;
@@ -79,25 +79,10 @@
   }
 
   /* ── GRID PRINCIPAL ── */
-.grid {
+  .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-        "act ba"
-        "fap fap";
+    grid-template-columns: 30% 30% 40%;
     gap: 6px;
-}
-
-.act {
-    grid-area: act;
-}
-
-.ba {
-    grid-area: ba;
-}
-
-.fap {
-    grid-area: fap;
 }
 
 /* ── CARD ── */
@@ -290,8 +275,8 @@
   }
   .crb-badge {
     flex-shrink: 0;
-    width: 34px;
-    height: 34px;
+    width: 26px;
+    height: 26px;
     background: var(--preto);
     color: var(--branco);
     font-family: 'Playfair Display', serif;
@@ -312,7 +297,7 @@
     display: flex;
     align-items: flex-start;
     gap: 6px;
-    padding: 4px 6px;
+    padding: 2px 4px;
     background: var(--bege);
     border-left: 3px solid var(--bege-dk);
     font-size: 7.5pt;
@@ -428,10 +413,12 @@
     }
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
   }
-  @page {
-    size: A4 portrait;
-    margin: 4mm;
-}
+ .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    padding: 4mm;
+ }
 </style>
 </head>
 <body>
