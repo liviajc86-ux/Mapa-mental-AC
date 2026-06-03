@@ -81,8 +81,23 @@
   /* ── GRID PRINCIPAL ── */
   .grid {
     display: grid;
-    grid-template-columns: 30% 30% 40%;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+        "act ba"
+        "fap fap";
     gap: 6px;
+}
+
+.act {
+    grid-area: act;
+}
+
+.ba {
+    grid-area: ba;
+}
+
+.fap {
+    grid-area: fap;
 }
 
 /* ── CARD ── */
