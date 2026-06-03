@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa Mental — Análise Funcional: ACT · BA · FAP</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap');
+
+  :root {
+    --bege:       #F5F0E8;
+    --bege-md:    #EDE6D6;
+    --bege-dk:    #D9CFBA;
+    --preto:      #1A1A1A;
+    --preto-md:   #2E2E2E;
+    --cinza:      #555555;
+    --cinza-lt:   #888888;
+    --vermelho:   #8B1A1A;
+    --verm-lt:    #A52020;
+    --verm-pale:  #F2E0E0;
+    --branco:     #FFFFFF;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bege);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11pt;
+    color: var(--preto);
+    line-height: 1.45;
+  }
+
+  /* ── PÁGINA ── */
+  .page {
+    width: 297mm;
+    min-height: 210mm;
+    margin: 0 auto;
+    padding: 14mm 14mm 14mm 14mm;
+    background: var(--bege);
+  }
+
+  /* ── CABEÇALHO ── */
+  .header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    border-bottom: 3px solid var(--vermelho);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  .header-title h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22pt;
+    font-weight: 900;
+    color: var(--preto);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .header-title h1 span { color: var(--vermelho); }
+  .header-title p {
+    font-size: 9pt;
+    color: var(--cinza);
+    margin-top: 3px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+  .header-badge {
+    background: var(--vermelho);
+    color: var(--branco);
+    font-family: 'Playfair Display', serif;
+    font-size: 8pt;
+    font-weight: 700;
+    padding: 4px 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── GRID PRINCIPAL ── */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--branco);
+    border: 1.5px solid var(--bege-dk);
+    border-top: 4px solid var(--vermelho);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-header {
+    background: var(--vermelho);
+    color: var(--branco);
+    padding: 9px 12px 8px;
+  }
+  .card-header .sigla {
+    font-family: 'Playfair Display', serif;
+    font-size: 18pt;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .card-header .nome-completo {
+    font-size: 7.5pt;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    opacity: 0.9;
+    margin-top: 1px;
+  }
+  .card-header .autores {
+    font-size: 7pt;
+    font-weight: 300;
+    font-style: italic;
+    opacity: 0.8;
+    margin-top: 3px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .card-body { padding: 10px 12px 12px; flex: 1; }
+
+  /* ── SEÇÃO DENTRO DO CARD ── */
+  .section { margin-bottom: 9px; }
+  .section:last-child { margin-bottom: 0; }
+
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 7pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--vermelho);
+    margin-bottom: 4px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 12px;
+    height: 2px;
+    background: var(--vermelho);
+    flex-shrink: 0;
+  }
+
+  /* ── DEFINIÇÃO ── */
+  .def-box {
+    background: var(--bege);
+    border-left: 3px solid var(--vermelho);
+    padding: 5px 8px;
+    font-size: 8.5pt;
+    color: var(--preto-md);
+    font-style: italic;
+  }
+
+  /* ── CHIPS / TAGS ── */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 3px;
+  }
+  .chip {
+    background: var(--bege-md);
+    border: 1px solid var(--bege-dk);
+    color: var(--preto-md);
+    font-size: 7.5pt;
+    padding: 2px 7px;
+    font-weight: 600;
+  }
+  .chip.red {
+    background: var(--verm-pale);
+    border-color: var(--vermelho);
+    color: var(--vermelho);
+  }
+
+  /* ── LISTA ── */
+  .mlist {
+    list-style: none;
+    padding: 0;
+    margin-top: 3px;
+  }
+  .mlist li {
+    font-size: 8pt;
+    color: var(--preto-md);
+    padding: 2px 0 2px 12px;
+    position: relative;
+    border-bottom: 1px dashed var(--bege-dk);
+    line-height: 1.35;
+  }
+  .mlist li:last-child { border-bottom: none; }
+  .mlist li::before {
+    content: '▸';
+    color: var(--vermelho);
+    position: absolute;
+    left: 0;
+    font-size: 7pt;
+    top: 3px;
+  }
+  .mlist li strong {
+    color: var(--vermelho);
+    font-weight: 700;
+  }
+
+  /* ── TABELA MINI ── */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 7.5pt;
+    margin-top: 3px;
+  }
+  .mini-table th {
+    background: var(--preto);
+    color: var(--branco);
+    padding: 3px 6px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 7pt;
+    letter-spacing: 0.5px;
+  }
+  .mini-table td {
+    padding: 3px 6px;
+    border-bottom: 1px solid var(--bege-dk);
+    color: var(--preto-md);
+    vertical-align: top;
+  }
+  .mini-table tr:nth-child(even) td { background: var(--bege); }
+
+  /* ── HEXÁGONO INFO (ACT) ── */
+  .hex-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    margin-top: 3px;
+  }
+  .hex-item {
+    background: var(--bege-md);
+    border: 1px solid var(--bege-dk);
+    padding: 4px 5px;
+    text-align: center;
+    font-size: 7pt;
+    font-weight: 700;
+    color: var(--preto);
+    line-height: 1.2;
+  }
+  .hex-item span {
+    display: block;
+    font-size: 6pt;
+    font-weight: 400;
+    color: var(--cinza);
+    margin-top: 1px;
+  }
+  .hex-item.hl {
+    background: var(--verm-pale);
+    border-color: var(--vermelho);
+    color: var(--vermelho);
+  }
+
+  /* ── CRB BOXES (FAP) ── */
+  .crb-grid { display: flex; flex-direction: column; gap: 3px; margin-top: 3px; }
+  .crb-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 7px;
+  }
+  .crb-badge {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    background: var(--preto);
+    color: var(--branco);
+    font-family: 'Playfair Display', serif;
+    font-size: 9pt;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .crb-badge.r { background: var(--vermelho); }
+  .crb-text { font-size: 7.5pt; color: var(--preto-md); line-height: 1.3; }
+  .crb-text strong { color: var(--preto); font-size: 7.5pt; }
+
+  /* ── REGRAS FAP ── */
+  .regras { display: flex; flex-direction: column; gap: 3px; margin-top: 3px; }
+  .regra {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 4px 6px;
+    background: var(--bege);
+    border-left: 3px solid var(--bege-dk);
+    font-size: 7.5pt;
+    color: var(--preto-md);
+    line-height: 1.3;
+  }
+  .regra.hl { border-left-color: var(--vermelho); background: var(--verm-pale); }
+  .regra-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 9pt;
+    font-weight: 700;
+    color: var(--vermelho);
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 1px;
+  }
+
+  /* ── RODAPÉ ── */
+  .footer {
+    margin-top: 12px;
+    border-top: 2px solid var(--bege-dk);
+    padding-top: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer-legend {
+    display: flex;
+    gap: 16px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 7pt;
+    color: var(--cinza);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    flex-shrink: 0;
+  }
+  .legend-dot.v { background: var(--vermelho); }
+  .legend-dot.p { background: var(--preto); }
+  .legend-dot.b { background: var(--bege-dk); border: 1px solid var(--cinza); }
+
+  .footer-note {
+    font-size: 7pt;
+    color: var(--cinza-lt);
+    text-align: right;
+    font-style: italic;
+  }
+
+  /* ── BANNER COMPARATIVO ── */
+  .compare-banner {
+    margin: 12px 0 0;
+    border: 1.5px solid var(--bege-dk);
+    background: var(--branco);
+    border-left: 4px solid var(--vermelho);
+  }
+  .compare-banner-header {
+    background: var(--preto);
+    color: var(--branco);
+    padding: 5px 12px;
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    font-size: 7.5pt;
+  }
+  .compare-col { border-right: 1px solid var(--bege-dk); }
+  .compare-col:last-child { border-right: none; }
+  .compare-col-hd {
+    background: var(--bege-md);
+    padding: 4px 8px;
+    font-weight: 700;
+    color: var(--preto);
+    font-size: 7pt;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--bege-dk);
+  }
+  .compare-col-hd.red { background: var(--verm-pale); color: var(--vermelho); }
+  .compare-cell {
+    padding: 5px 8px;
+    color: var(--preto-md);
+    border-bottom: 1px dashed var(--bege-dk);
+    line-height: 1.35;
+  }
+  .compare-cell:last-child { border-bottom: none; }
+  .compare-cell .tag {
+    display: inline-block;
+    background: var(--bege-dk);
+    font-size: 6.5pt;
+    padding: 1px 5px;
+    font-weight: 700;
+    color: var(--preto);
+    margin-bottom: 2px;
+  }
+  .compare-cell .tag.r { background: var(--verm-pale); color: var(--vermelho); }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    .page {
+      width: 297mm;
+      padding: 10mm 10mm;
+      box-shadow: none;
+    }
+    * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+  @page { size: A4 landscape; margin: 8mm; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ══ CABEÇALHO ══ -->
+  <div class="header">
+    <div class="header-title">
+      <h1>Análise <span>Funcional</span> na Clínica Comportamental</h1>
+      <p>Terapias Contextuais de Terceira Geração · Análise do Comportamento Aplicada à Clínica</p>
+    </div>
+    <div class="header-badge">Mapa Mental · Revisão</div>
+  </div>
+
+  <!-- ══ GRID 3 COLUNAS ══ -->
+  <div class="grid">
+
+    <!-- ════════════════ COLUNA 1 — ACT ════════════════ -->
+    <div class="card">
+      <div class="card-header">
+        <div class="sigla">ACT</div>
+        <div class="nome-completo">Terapia de Aceitação e Compromisso</div>
+        <div class="autores">Hayes, Wilson &amp; Strosahl · 1999 / 2012 · 3ª geração</div>
+      </div>
+      <div class="card-body">
+
+        <!-- Definição -->
+        <div class="section">
+          <div class="section-label">Definição</div>
+          <div class="def-box">
+            Abordagem comportamental contextual que visa ampliar a <strong>flexibilidade psicológica</strong> do indivíduo, substituindo a esquiva experiencial por aceitação e ação orientada por valores.
+          </div>
+        </div>
+
+        <!-- Base teórica -->
+        <div class="section">
+          <div class="section-label">Base Teórica</div>
+          <div class="chips">
+            <span class="chip red">Contextualismo Funcional</span>
+            <span class="chip red">RFT — Teoria das Molduras Relacionais</span>
+            <span class="chip">Behaviorismo Radical</span>
+            <span class="chip">Comportamento governado por regras</span>
+          </div>
+        </div>
+
+        <!-- Psicopatologia -->
+        <div class="section">
+          <div class="section-label">Como entende o sofrimento</div>
+          <ul class="mlist">
+            <li><strong>Inflexibilidade psicológica</strong> = padrão central de todo sofrimento</li>
+            <li><strong>Fusão cognitiva:</strong> tratar pensamentos como fatos reais (literalidade)</li>
+            <li><strong>Esquiva experiencial:</strong> evitar sensações, sentimentos e pensamentos internos — mantida por <strong>reforço negativo</strong> (alívio temporário)</li>
+            <li><strong>Sofrimento limpo</strong> (dor inerente à vida) vs. <strong>Sofrimento sujo</strong> (restrição de repertório causada pela esquiva)</li>
+          </ul>
+        </div>
+
+        <!-- Hexágono -->
+        <div class="section">
+          <div class="section-label">Modelo Hexaflex — 6 Processos</div>
+          <div class="hex-grid">
+            <div class="hex-item hl">Aceitação<span>Abertura</span></div>
+            <div class="hex-item hl">Momento Presente<span>Atenção</span></div>
+            <div class="hex-item hl">Valores<span>Motivação</span></div>
+            <div class="hex-item">Desfusão<span>Cognição</span></div>
+            <div class="hex-item">Self como Contexto<span>Self observador</span></div>
+            <div class="hex-item">Ações com Compromisso<span>Comportamento</span></div>
+          </div>
+        </div>
+
+        <!-- Técnicas -->
+        <div class="section">
+          <div class="section-label">Técnicas e Procedimentos</div>
+          <ul class="mlist">
+            <li><strong>Desesperança Criativa:</strong> observar ciclo vicioso da esquiva; motivar aceitação</li>
+            <li><strong>"O controle é o problema":</strong> ex. do Bolo de Chocolate — demonstrar impossibilidade de controlar eventos privados</li>
+            <li><strong>Aceitação (treino de sentir):</strong> passar pela curva do respondente sem esquivar (extinção respondente — 5 a 15 min)</li>
+            <li><strong>Desfusão:</strong> observar pensamentos como respostas, não fatos (metáfora do ônibus; metáfora do filme)</li>
+            <li><strong>Momento presente / Mindfulness:</strong> treino sensorial, ancoragem no aqui-e-agora</li>
+            <li><strong>Self como contexto:</strong> treinar o "eu observador" — metáfora do tabuleiro de xadrez</li>
+            <li><strong>Clarificação de valores</strong> e distinção valor × objetivo</li>
+            <li><strong>Ações com compromisso:</strong> plano de ação guiado por valores, dividindo objetivos em passos menores</li>
+          </ul>
+        </div>
+
+        <!-- Indicações -->
+        <div class="section">
+          <div class="section-label">Indicações Clínicas</div>
+          <div class="chips">
+            <span class="chip">Ansiedade / TEPT</span>
+            <span class="chip">Depressão</span>
+            <span class="chip">Dor crônica</span>
+            <span class="chip">TOC</span>
+            <span class="chip">Uso de substâncias</span>
+            <span class="chip">Qualquer quadro com esquiva experiencial dominante</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /ACT -->
+
+    <!-- ════════════════ COLUNA 2 — BA ════════════════ -->
+    <div class="card">
+      <div class="card-header">
+        <div class="sigla">BA</div>
+        <div class="nome-completo">Ativação Comportamental</div>
+        <div class="autores">Ferster (1973) · Lewinsohn (1976) · Abreu &amp; Abreu · 3ª geração</div>
+      </div>
+      <div class="card-body">
+
+        <!-- Definição -->
+        <div class="section">
+          <div class="section-label">Definição</div>
+          <div class="def-box">
+            Intervenção comportamental que rompe a inércia depressiva reintroduzindo contato sistemático com <strong>fontes de reforço positivo</strong>, agindo de fora para dentro: a ação precede e gera a motivação.
+          </div>
+        </div>
+
+        <!-- Base -->
+        <div class="section">
+          <div class="section-label">Base Teórica</div>
+          <div class="chips">
+            <span class="chip red">Queda da RCPR (Taxa de Respostas Contingentes ao Reforço Positivo)</span>
+            <span class="chip">Operante / Contingências</span>
+            <span class="chip">Análise Funcional ABC</span>
+            <span class="chip">Reforço Negativo como manutenção</span>
+          </div>
+        </div>
+
+        <!-- Modelo da depressão -->
+        <div class="section">
+          <div class="section-label">Modelo da Depressão</div>
+          <ul class="mlist">
+            <li><strong>3 caminhos para desaparecimento dos reforçadores:</strong></li>
+            <li><strong>1. Mudança no ambiente</strong> (luto, demissão, mudança) → perde fontes de reforço</li>
+            <li><strong>2. Déficit de habilidades</strong> (assertividade, habilidades sociais) → não acessa o reforço disponível</li>
+            <li><strong>3. Anedonia / Extinção operante</strong> → reforçador presente, mas perdeu seu impacto hedônico</li>
+            <li><strong>Armadilha do alívio:</strong> esquiva passiva (isolamento, ruminação, hipersonia) produz alívio imediato (reforço negativo) mas aumenta depressão a longo prazo</li>
+            <li><strong>Punição social</strong> e <strong>Desamparo aprendido</strong> como âncoras cronificadoras</li>
+          </ul>
+        </div>
+
+        <!-- ABC -->
+        <div class="section">
+          <div class="section-label">Modelo ABC — Análise Funcional</div>
+          <table class="mini-table">
+            <tr>
+              <th>A — Antecedente</th>
+              <th>B — Comportamento</th>
+              <th>C — Consequência</th>
+            </tr>
+            <tr>
+              <td>Gatilho ambiental (prazo, convite, evento)</td>
+              <td>Ação ou inação do paciente (isolar-se, ruminar)</td>
+              <td>Alívio imediato + aumento crônico do isolamento</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Técnicas -->
+        <div class="section">
+          <div class="section-label">Técnicas e Procedimentos</div>
+          <ul class="mlist">
+            <li><strong>Agenda de Atividades:</strong> instrumento central — registrar atividades com notas de Prazer (0–5) e Domínio (0–5)</li>
+            <li><strong>Monitoramento de fora para dentro:</strong> mapear padrões invisíveis de evitação</li>
+            <li><strong>GEE (Gatilho → Emoção → Esquiva/Enfrentamento):</strong> adaptação br. do TRAP/TRAC — identificar ponto de virada entre esquiva passiva e enfrentamento ativo</li>
+            <li><strong>Integração com ACT:</strong> atividades guiadas por valores (não apenas pelo humor momentâneo)</li>
+            <li><strong>BDI-II:</strong> avaliação quinzenal da severidade (0–63) para calibragem contínua</li>
+            <li><strong>FAP integrada:</strong> relação terapêutica como laboratório de modelagem de habilidades sociais</li>
+          </ul>
+        </div>
+
+        <!-- Indicações -->
+        <div class="section">
+          <div class="section-label">Indicações Clínicas</div>
+          <div class="chips">
+            <span class="chip red">Depressão (1ª linha — APA, OMS, NICE)</span>
+            <span class="chip">Ansiedade</span>
+            <span class="chip">TEPT</span>
+            <span class="chip">Esquizofrenia (sintomas negativos)</span>
+            <span class="chip">Uso de substâncias</span>
+            <span class="chip">Superioridade demonstrada vs. TCC clássica em quadros severos</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /BA -->
+
+    <!-- ════════════════ COLUNA 3 — FAP ════════════════ -->
+    <div class="card">
+      <div class="card-header">
+        <div class="sigla">FAP</div>
+        <div class="nome-completo">Psicoterapia Analítico-Funcional</div>
+        <div class="autores">Kohlenberg &amp; Tsai · 1991 / 2004 · 3ª geração</div>
+      </div>
+      <div class="card-body">
+
+        <!-- Definição -->
+        <div class="section">
+          <div class="section-label">Definição</div>
+          <div class="def-box">
+            Abordagem comportamental que utiliza a <strong>relação terapêutica</strong> como laboratório in vivo, aplicando análise funcional skinneriana ao ambiente da sessão para moldar repertórios mais adaptativos.
+          </div>
+        </div>
+
+        <!-- Base -->
+        <div class="section">
+          <div class="section-label">Base Teórica</div>
+          <div class="chips">
+            <span class="chip red">Análise funcional skinneriana</span>
+            <span class="chip red">Contextualismo funcional</span>
+            <span class="chip">Behaviorismo Radical</span>
+            <span class="chip">Reforçamento natural na sessão</span>
+          </div>
+        </div>
+
+        <!-- CRBs -->
+        <div class="section">
+          <div class="section-label">Comportamentos Clinicamente Relevantes (CRBs)</div>
+          <div class="crb-grid">
+            <div class="crb-item">
+              <div class="crb-badge r">CRB1</div>
+              <div class="crb-text"><strong>Comportamento-Problema na sessão</strong> — esquivas, passividade, resistência inassertiva que ocorrem ao vivo. Frequência deve ser reduzida.</div>
+            </div>
+            <div class="crb-item">
+              <div class="crb-badge r">CRB2</div>
+              <div class="crb-text"><strong>Progresso na sessão</strong> — vulnerabilidade, assertividade real. Exige reforço social imediato, autêntico e calibrado do terapeuta.</div>
+            </div>
+            <div class="crb-item">
+              <div class="crb-badge">CRB3</div>
+              <div class="crb-text"><strong>Interpretação funcional do próprio comportamento</strong> — cliente descreve conexões funcionais; promove generalização para a vida diária.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Regras -->
+        <div class="section">
+          <div class="section-label">As 5 Regras da FAP</div>
+          <div class="regras">
+            <div class="regra hl">
+              <span class="regra-num">R1</span>
+              <span><strong>Observar CRBs</strong> — atenção contínua ao que ocorre na sessão. Pergunta-chave: <em>"Isto está acontecendo agora?"</em></span>
+            </div>
+            <div class="regra hl">
+              <span class="regra-num">R2</span>
+              <span><strong>Evocar CRBs</strong> — terapeuta ativo e caloroso; uso de associação livre, cadeira vazia, relato de sonhos, imaginação</span>
+            </div>
+            <div class="regra hl">
+              <span class="regra-num">R3</span>
+              <span><strong>Reforçar CRB2s</strong> — reforço natural e contingente ao progresso. Bloqueio da esquiva + reapresentação do Sd evocador</span>
+            </div>
+            <div class="regra">
+              <span class="regra-num">R4</span>
+              <span><strong>Observar efeitos do próprio comportamento</strong> — terapeuta monitora seu impacto sobre o cliente; desenvolve CRB3</span>
+            </div>
+            <div class="regra">
+              <span class="regra-num">R5</span>
+              <span><strong>Fornecer interpretações funcionais</strong> — especificar variáveis de controle; auxiliar na criação de regras mais efetivas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Generalização -->
+        <div class="section">
+          <div class="section-label">Generalização</div>
+          <ul class="mlist">
+            <li>A mudança na sessão só tem valor se <strong>transferida para a vida cotidiana</strong></li>
+            <li>Sessão como ambiente <strong>funcionalmente similar</strong> ao cotidiano do cliente</li>
+            <li>Ações do terapeuta têm função <strong>discriminativa, eliciadora e reforçadora</strong></li>
+          </ul>
+        </div>
+
+        <!-- Indicações -->
+        <div class="section">
+          <div class="section-label">Indicações Clínicas</div>
+          <div class="chips">
+            <span class="chip">Dificuldades de intimidade</span>
+            <span class="chip">Hostilidade / Hipersensibilidade</span>
+            <span class="chip">Ansiedade social</span>
+            <span class="chip red">Déficit de habilidades interpessoais</span>
+            <span class="chip">TOC</span>
+            <span class="chip">Potencializa BA e ACT</span>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /FAP -->
+
+  </div><!-- /grid -->
+
+  <!-- ══ TABELA COMPARATIVA ══ -->
+  <div class="compare-banner">
+    <div class="compare-banner-header">▸ Quadro Comparativo — ACT × BA × FAP na perspectiva da Análise do Comportamento</div>
+    <div class="compare-grid">
+
+      <div class="compare-col">
+        <div class="compare-col-hd red">Dimensão</div>
+        <div class="compare-cell"><span class="tag">Psicopatologia</span></div>
+        <div class="compare-cell"><span class="tag">Objetivo central</span></div>
+        <div class="compare-cell"><span class="tag">Locus de intervenção</span></div>
+        <div class="compare-cell"><span class="tag">Papel do reforço</span></div>
+        <div class="compare-cell"><span class="tag">Análise Funcional</span></div>
+      </div>
+
+      <div class="compare-col">
+        <div class="compare-col-hd">ACT</div>
+        <div class="compare-cell">Inflexibilidade psicológica; esquiva experiencial mantida por reforço negativo</div>
+        <div class="compare-cell">Flexibilidade psicológica; ação orientada por valores</div>
+        <div class="compare-cell">Eventos privados (pensamentos, sentimentos, sensações)</div>
+        <div class="compare-cell">Reduzir reforço negativo da esquiva; reforçar ação comprometida com valores</div>
+        <div class="compare-cell">Identifica função da esquiva; contexto histórico da fusão cognitiva</div>
+      </div>
+
+      <div class="compare-col">
+        <div class="compare-col-hd">BA</div>
+        <div class="compare-cell">Queda da RCPR; esquiva passiva dominada por reforço negativo</div>
+        <div class="compare-cell">Restaurar contato com reforçadores positivos; romper inércia</div>
+        <div class="compare-cell">Comportamentos observáveis; agenda de atividades; rotina</div>
+        <div class="compare-cell">Aumentar reforço positivo; extinguir esquiva passiva</div>
+        <div class="compare-cell">Modelo ABC (A→B→C); GEE; Agenda com métricas prazer/domínio</div>
+      </div>
+
+      <div class="compare-col">
+        <div class="compare-col-hd">FAP</div>
+        <div class="compare-cell">Repertórios interpessoais deficitários; CRB1s dominantes na sessão</div>
+        <div class="compare-cell">Modelar repertórios adaptativos na sessão → generalizar</div>
+        <div class="compare-cell">Relação terapêutica in vivo; sessão como laboratório</div>
+        <div class="compare-cell">Reforço natural e contingente do terapeuta ao CRB2</div>
+        <div class="compare-cell">Identificação de CRBs; funções Sd, eliciador e reforçador das ações do terapeuta</div>
+      </div>
+
+      <div class="compare-col">
+        <div class="compare-col-hd red">Ponto comum</div>
+        <div class="compare-cell"><span class="tag r">Análise funcional</span> do comportamento-problema em contexto</div>
+        <div class="compare-cell">Ampliar repertório comportamental; reduzir esquiva</div>
+        <div class="compare-cell">Contingências atuais e história de aprendizagem</div>
+        <div class="compare-cell">Reforço negativo como <span class="tag r">motor da manutenção</span> do sofrimento</div>
+        <div class="compare-cell">A → B → C guia <span class="tag r">toda</span> formulação e intervenção</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ RODAPÉ ══ -->
+  <div class="footer">
+    <div class="footer-legend">
+      <div class="legend-item"><div class="legend-dot v"></div> Conceito central / destaque</div>
+      <div class="legend-item"><div class="legend-dot p"></div> Elemento técnico</div>
+      <div class="legend-item"><div class="legend-dot b"></div> Informação complementar</div>
+    </div>
+    <div class="footer-note">
+      Fontes: Hayes, Wilson &amp; Strosahl (1999/2012) · Ferster (1973) · Lewinsohn (1976) · Abreu &amp; Abreu (2015; 2021) · Kohlenberg &amp; Tsai (2004)<br>
+      Análise do Comportamento · Terapias Contextuais de 3ª Geração · Análise Funcional Clínica
+    </div>
+  </div>
+
+</div><!-- /page -->
+</body>
+</html>
